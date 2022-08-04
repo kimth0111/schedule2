@@ -2554,7 +2554,7 @@ const health = {
 }// 체육과 보건중 먼저나오는 세트
 
 let number = localStorage.getItem("number") | "";
-if(number){
+if(list4[number]){
 	draw();
 }
 document.querySelector("form").addEventListener("submit",(el)=>{
