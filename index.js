@@ -2480,6 +2480,7 @@ document.querySelector("form").addEventListener("submit",(el)=>{
 })
 
 function draw(){
+	console.log("hihi");
 	const set4 = document.querySelectorAll(".set4-tr td");
 	const set2 = document.querySelectorAll(".set2-tr td");
 	const subject2 = document.querySelectorAll(" .subject2-tr td");
@@ -2492,12 +2493,11 @@ function draw(){
 		if(list2[number][set2[index].innerText])
 		sub.innerHTML = list2[number][set2[index].innerText]
 	})
-	
+	console.log("hihi");
 	
 	const scheTr = document.querySelectorAll("#own-schedule tr");
 	let now =  new Date();
 	let day = now.getDay();
-	console.log(day);
 	scheTr.forEach((tr)=>{
 		const td = tr.querySelectorAll("td");
 		td.forEach((td, index)=>{
