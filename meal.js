@@ -20,6 +20,7 @@ if(!mealList){
 } else{
 	getList(today);
 }
+console.log(mealList);
 
 function getData(re=false){
 	
