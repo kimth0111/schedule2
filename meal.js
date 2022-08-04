@@ -31,7 +31,6 @@ function getData(re=false){
 	)
   .then((res) => res.json()) // 응답 데이터를 json화
   .then((myJson) => {
-	if(mealList!=myJson["mealServiceDietInfo"][1].row)
 		localStorage.setItem("meal-list", JSON.stringify(myJson["mealServiceDietInfo"][1].row));
     mealList = myJson["mealServiceDietInfo"][1].row; // 받은 데이터에서 필요한 급식데이터만 추출
     getList(today, re);
