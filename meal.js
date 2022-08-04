@@ -14,18 +14,30 @@ const today = {
   month: date.getMonth() + 1,
 };
 
-//fetch로 api에 요청하여 급식데이터 가져오기
-fetch(
-  "https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=981b2e196a364ee7b2223e11f375de26&Type=json&pSize=1000&" +
-    url
-)
+mealList = JSON.parse(localStorage.getItem("meal-list"));
+if(!mealList){
+	getData();
+} else{
+	getList(today);
+}
+
+function getData(re=false){
+	
+	//fetch로 api에 요청하여 급식데이터 가져오기
+	fetch(
+	  "https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=981b2e196a364ee7b2223e11f375de26&Type=json&pSize=1000&" +
+		 url
+	)
   .then((res) => res.json()) // 응답 데이터를 json화
   .then((myJson) => {
+	if(mealList!=myJson["mealServiceDietInfo"][1].row)
+		localStorage.setItem("meal-list", JSON.stringify(myJson["mealServiceDietInfo"][1].row));
     mealList = myJson["mealServiceDietInfo"][1].row; // 받은 데이터에서 필요한 급식데이터만 추출
-    getList(today);
-  });
+    getList(today, re);
+  });	
+}
 
-function getList(dateJson) {
+function getList(dateJson, re=false) {
   // 날짜를 받고 그 날짜의 급식 데이터를 반환
   /* dateJson 형식
 	{
@@ -52,6 +64,11 @@ function getList(dateJson) {
     //급식 정보가 없다면
     if (!list[i]) {
       list[i] = ["급식정보가 없습니다!"];
+		if(!re)
+		{
+			getData(true);
+			return;
+		}
       continue;
     }
     list[i] = list[i].DDISH_NM.split("<br/>"); // ex) "백미밥<br/>김치" --> ["백미밥", "김치"]
