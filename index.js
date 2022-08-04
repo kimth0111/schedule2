@@ -2475,6 +2475,7 @@ if(number){
 document.querySelector("form").addEventListener("submit",(el)=>{
 	el.preventDefault();
 	number = el.target.number.value;
+	el.target.number.value = "";
 	localStorage.setItem("number", number)
 	draw();
 })
