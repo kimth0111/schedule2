@@ -2475,7 +2475,6 @@ if(number){
 document.querySelector("form").addEventListener("submit",(el)=>{
 	el.preventDefault();
 	number = el.target.number.value;
-	el.target.number.value = "";
 	localStorage.setItem("number", number)
 	draw();
 })
@@ -2492,5 +2491,35 @@ function draw(){
 	subject2.forEach((sub, index)=>{
 		if(list2[number][set2[index].innerText])
 		sub.innerHTML = list2[number][set2[index].innerText]
+	})
+	
+	
+	const scheTr = document.querySelectorAll("#own-schedule tr");
+	let now =  new Date();
+	let day = now.getDay();
+	scheTr.forEach((tr)=>{
+		const td = tr.querySelectorAll("td");
+		td.forEach((td, index)=>{
+			let a = td.innerText;
+			if(a.length == 1){
+				if(list4[number][a])	{
+					td.innerText = list4[number][a];
+					console.log(day, index);
+					if(day == index)
+						td.classList.add("today");
+				}
+				
+			}
+			if(a.length == 2){
+				a=a.replace("*","")
+			console.log(a);
+				if(list2[number][a])	{
+					td.innerText = list2[number][a];
+					if(day == index)
+						td.classList.add("today");
+				}
+				
+			}
+		})
 	})
 }
