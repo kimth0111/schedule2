@@ -91,7 +91,7 @@ function drawList({ dateJson, list }) {
 	  
       const div = document.createElement("div");
 	  div.classList = "meal-title";
-	  div.innerText = ["아침!","점심!", "저녁!"][i]
+	  div.innerText = ["아침","점심", "저녁"][i]
       divList.appendChild(div);
     for (let j = 0; j < list[i].length; j++) {
       const div = document.createElement("div");
