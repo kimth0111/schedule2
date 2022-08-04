@@ -1,3 +1,73 @@
+const teacher = 
+		{
+    "독서1B": "이우진",
+    "독서1C": "김성규",
+    "독서1D": "이우진",
+    "독서1E": "김성규",
+    "독서1F": "김성규",
+    "독서2A": "김성규",
+    "독서2B": "이영호",
+    "독서2C": "이영호",
+    "독서2D": "이영호",
+    "독서2F": "이영호",
+    "고전읽기C": "이우진",
+    "확률과통계1E": "유왕성",
+    "확률과통계1F": "유왕성",
+    "생활과 윤리": "송기호",
+    "윤리와 사상": "이수민",
+    "수학Ⅱ-1A": "김진아",
+    "수학Ⅱ-1D": "김진아",
+    "수학Ⅱ-1E": "김진아",
+    "수학Ⅱ-1F": "김진아",
+    "화학Ⅱ": "한진규",
+    "수학Ⅱ-2B": "이종문",
+    "수학Ⅱ-2C": "이종문",
+    "수학Ⅱ-2D": "이종문",
+    "수학Ⅱ-2E": "이종문",
+    "생명과학Ⅰ": "이상은",
+    "확률과통계1A": "김도은",
+    "확률과통계1B": "김도은",
+    "확률과통계1C": "김도은",
+    "확률과통계1D": "김도은",
+    "생명과학Ⅱ": "이상은",
+    "확률과통계2A": "김규조",
+    "물리학Ⅰ": "이윤숙",
+    "물리학Ⅱ": "노명지",
+    "화학Ⅰ": "김보련",
+    "지구과학Ⅰ": "조양연",
+    "영어Ⅱ-1A": "한종오",
+    "영어Ⅱ-1B": "한종오",
+    "영어Ⅱ-1C": "한종오",
+    "영어Ⅱ-1D": "한종오",
+    "경제": "김기모",
+    "영어Ⅱ-2A": "이정현",
+    "영어Ⅱ-2B": "이정현",
+    "영어Ⅱ-2E": "이정현",
+    "영어Ⅱ-2F": "이정현",
+    "사회문화": "김기모",
+    "영미문학읽기F": "배오현",
+    "한국지리": "이해창",
+    "정보과학": "김용상",
+    "세계사": "한우진",
+    "정치와법": "김형석",
+    "한국사1": "한우진",
+    "일본어Ⅰ": "황석균",
+    "교육학": "배오현",
+    "철학": "김용태",
+    "빅데이터분석1": "김용상",
+    "한국사2": "정기엽",
+    "중국어Ⅰ": "임지성",
+    "심리학": "김혜선",
+    "국제경제": "김형석",
+    "빅데이터분석2A": "하미경",
+	 "빅데이터분석2B": "하미경",
+    "빅데이터분석2C": "김근호",
+	 "빅데이터분석2D": "김근호",
+    "보건1&운동1": "신현순/박병찬",
+	 "보건2&운동2": "신현순/박병찬",
+    "ㅇ": "dㅇ"
+}
+
 const list2={
     "20101": {
         "고정명": "이름",
@@ -2467,6 +2537,7 @@ const list4 = {
     }
 }
 
+const schedule = [['E','E','C','B','A'],['C','A*','A','B*','D*'],['B','C','C*','C','D'],['A','A','B*','E','F'],['D','F','E','F','창'],['D','B','F','C*','창'],['A*','D','B','D','창']];
 
 let number = localStorage.getItem("number") | "";
 if(number){
@@ -2475,52 +2546,80 @@ if(number){
 document.querySelector("form").addEventListener("submit",(el)=>{
 	el.preventDefault();
 	number = el.target.number.value;
+	if(number.length == 4) number = number[0] + "0" + number[1] + number[2] + number[3];
 	localStorage.setItem("number", number)
 	draw();
 })
 
 function draw(){
-	console.log("hihi");
 	const set4 = document.querySelectorAll(".set4-tr td");
 	const set2 = document.querySelectorAll(".set2-tr td");
 	const subject2 = document.querySelectorAll(" .subject2-tr td");
 	const subject4 = document.querySelectorAll(" .subject4-tr td");
+	const teacher4 = document.querySelectorAll(".teacher4-tr td");
+	const teacher2 = document.querySelectorAll(".teacher2-tr td");
+	
 	document.querySelector(".name").innerHTML = number;
+	
+	//4단위
 	subject4.forEach((sub, index)=>{
 		sub.innerHTML = list4[number][set4[index].innerText]
 	})
+	teacher4.forEach((tch, index)=>{
+		const a = whoTeacher(subject4[index].innerText ,set4[index].innerText)
+		tch.innerText = a;
+	})
+	//2단위
 	subject2.forEach((sub, index)=>{
 		if(list2[number][set2[index].innerText])
 		sub.innerHTML = list2[number][set2[index].innerText]
 	})
-	console.log("hihi");
+	teacher2.forEach((tch, index)=>{
+		
+		if(list2[number][set2[index].innerText])
+		tch.innerText = whoTeacher(subject2[index].innerText ,set2[index].innerText);
+	})
+	
 	
 	const scheTr = document.querySelectorAll("#own-schedule tr");
 	let now =  new Date();
 	let day = now.getDay();
-	scheTr.forEach((tr)=>{
-		const td = tr.querySelectorAll("td");
-		td.forEach((td, index)=>{
-			let a = td.innerText;
-			if(a.length == 1){
-				if(list4[number][a])	{
-					td.innerText = list4[number][a];
-					console.log(day, index);
-					if(day == index)
-						td.classList.add("today");
+	scheTr.forEach((tr,i)=>{
+		if(i!=0){
+			const td = tr.querySelectorAll("td");
+			td.forEach((td, j)=>{
+				if(j!=0){
+					let a = schedule[i-1][j-1];
+				if(a.length == 1){
+					if(list4[number][a])	{
+						td.innerHTML = list4[number][a]+"<br/>"+"("+whoTeacher(list4[number][a],a)+"T)";
+						if(day == j)
+							td.classList.add("today");
+					}
+
 				}
-				
-			}
-			if(a.length == 2){
-				a=a.replace("*","")
-			console.log(a);
-				if(list2[number][a])	{
-					td.innerText = list2[number][a];
-					if(day == index)
-						td.classList.add("today");
+				if(a.length == 2){
+					a=a.replace("*","")
+						if(list2[number][a])	{
+							td.innerHTML = list2[number][a]+"<br/>"+"("+whoTeacher(list2[number][a],a)+"T)";
+							if(day == j)
+								td.classList.add("today");
+						}
+					}
 				}
-				
-			}
-		})
+			})
+		}
 	})
 }
+
+function whoTeacher(sub, set){
+	if(teacher[sub]) return teacher[sub];
+	if(teacher[sub+set]) return teacher[sub+set];
+	console.log("errrrrorrrrr", sub, set);
+	return undefined;
+}
+
+Object.keys(list4).forEach(key=>{
+	number = key;
+	draw();
+})
