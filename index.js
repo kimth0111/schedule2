@@ -65,6 +65,10 @@ const teacher =
 	 "빅데이터분석2D": "김근호",
     "보건1&운동1": "신현순/박병찬",
 	 "보건2&운동2": "신현순/박병찬",
+			"보건1":"신현순",
+			"보건2":"신현순",
+			"운동1":"박병찬",
+			"운동2":"박병찬",
     "ㅇ": "dㅇ"
 }
 
@@ -2538,6 +2542,16 @@ const list4 = {
 }
 
 const schedule = [['E','E','C','B','A'],['C','A*','A','B*','D*'],['B','C','C*','C','D'],['A','A','B*','E','F'],['D','F','E','F','창'],['D','B','F','C*','창'],['A*','D','B','D','창']];
+const health = {
+	"1D": "보건1",
+	"2D": "운동2",
+	"1A": "운동1",
+	"2A": "보건2",
+	"1C": "보건1",
+	"2C": "운동2",
+	"1B": "보건1",
+	"2B": "운동2",
+}// 체육과 보건중 먼저나오는 세트
 
 let number = localStorage.getItem("number") | "";
 if(number){
@@ -2584,6 +2598,7 @@ function draw(){
 	const scheTr = document.querySelectorAll("#own-schedule tr");
 	let now =  new Date();
 	let day = now.getDay();
+	let healthCnt=0;
 	scheTr.forEach((tr,i)=>{
 		if(i!=0){
 			const td = tr.querySelectorAll("td");
@@ -2600,7 +2615,18 @@ function draw(){
 				}
 				if(a.length == 2){
 					a=a.replace("*","")
-						if(list2[number][a])	{
+					if(list2[number][a][1] =="건"){
+							let subH;
+							if(healthCnt++ == 0)
+								subH = health[list2[number][a][list2[number][a].length-1]+a];
+							else{
+								subH = list2[number][a].replace("&","").replace(health[list2[number][a][list2[number][a].length-1]+a],"");
+							}
+							td.innerHTML = subH+"<br/>"+"("+whoTeacher(subH,a)+"T)";
+							if(day == j)
+								td.classList.add("today");
+						}
+						else if(list2[number][a])	{
 							td.innerHTML = list2[number][a]+"<br/>"+"("+whoTeacher(list2[number][a],a)+"T)";
 							if(day == j)
 								td.classList.add("today");
@@ -2619,7 +2645,7 @@ function whoTeacher(sub, set){
 	return undefined;
 }
 
-Object.keys(list4).forEach(key=>{
-	number = key;
-	draw();
-})
+//Object.keys(list4).forEach(key=>{
+	//number = key;
+	//draw();
+//})
