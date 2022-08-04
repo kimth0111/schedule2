@@ -2497,6 +2497,7 @@ function draw(){
 	const scheTr = document.querySelectorAll("#own-schedule tr");
 	let now =  new Date();
 	let day = now.getDay();
+	console.log(day);
 	scheTr.forEach((tr)=>{
 		const td = tr.querySelectorAll("td");
 		td.forEach((td, index)=>{
