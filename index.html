@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>세트표</title>
+        <title></title>
 		 <style>
 			 table{
 			 	border: 1px solid black;
@@ -25,14 +25,34 @@
 			 	width: 40px;
 				 height: 30px;
 			 }
+			 #own-schedule .time{
+				 border: 2px solid black;
+			 	width: 60px;
+				 height: 70px;
+			 }
+			 #own-schedule .day{
+				 border: 2px solid black;
+			 	width: 100px;
+				 height: 70px;
+			 }
+			 #own-schedule .subject-sch{
+			 	width: 80px;
+				 height: 30px;
+			 }
+			 .today{
+			 	background-color: #FFFFCC;
+			 }
 		 </style>
     </head>
     <body>
 		 <form>
-		 	<input type="text" name="number" placeholder="예시: 2821 ==> 20821" autocomplete="off"/>
+		 	<input type="text" name="number" placeholder="예시: 2821 ==> 20821"/>
 		 </form>
 		 
 		 <div>학번: <span class="name"></span></div>
+		 
+		 <div style="display: flex">
+			 <div>
 		 <table border="1" id="set-tb">
 			 <tr class="title">
 				 <td colspan="6">4단위</td>
@@ -121,9 +141,80 @@
 				 </td>
 			 </tr>
 		 </table>
+			 </div>
+		 <table border="1" id="own-schedule" style="position: relative; left:50px; top: -30px">
+			 <tr>
+				 <td class="time">\</td>
+				 <td class="day">월</td>
+				 <td class="day">화</td>
+				 <td class="day">수</td>
+				 <td class="day">목</td>
+				 <td class="day">금</td>
+			 </tr>
+			 
+			 <tr>
+				 <td class="time">1교시</td>
+				 <td class="subject-sch">E</td>
+				 <td class="subject-sch">E</td>
+				 <td class="subject-sch">C</td>
+				 <td class="subject-sch">B</td>
+				 <td class="subject-sch">A</td>
+			 </tr>
+			 <tr>
+				 <td class="time">2교시</td>
+				 <td class="subject-sch">C</td>
+				 <td class="subject-sch">A*</td>
+				 <td class="subject-sch">A</td>
+				 <td class="subject-sch">B*</td>
+				 <td class="subject-sch">D*</td>
+			 </tr>
+			 <tr>
+				 <td class="time">3교시</td>
+				 <td class="subject-sch">B</td>
+				 <td class="subject-sch">C</td>
+				 <td class="subject-sch">C*</td>
+				 <td class="subject-sch">C</td>
+				 <td class="subject-sch">D</td>
+			 </tr>
+			 <tr>
+				 <td class="time">4교시</td>
+				 <td class="subject-sch">A</td>
+				 <td class="subject-sch">A</td>
+				 <td class="subject-sch">B*</td>
+				 <td class="subject-sch">E</td>
+				 <td class="subject-sch">F</td>
+			 </tr>
+			 <tr>
+				 <td class="time">5교시</td>
+				 <td class="subject-sch">D*</td>
+				 <td class="subject-sch">F</td>
+				 <td class="subject-sch">E</td>
+				 <td class="subject-sch">F</td>
+				 <td class="subject-sch">창</td>
+			 </tr>
+			 <tr>
+				 <td class="time">6교시</td>
+				 <td class="subject-sch">D</td>
+				 <td class="subject-sch">B</td>
+				 <td class="subject-sch">F</td>
+				 <td class="subject-sch">C*</td>
+				 <td class="subject-sch">창</td>
+			 </tr>
+			 <tr>
+				 <td class="time">7교시</td>
+				 <td class="subject-sch">A*</td>
+				 <td class="subject-sch">D</td>
+				 <td class="subject-sch">B</td>
+				 <td class="subject-sch">D</td>
+				 <td class="subject-sch">창</td>
+			 </tr>
+		 </table>
+		 </div>
+		 
 		 <br/>
 		 <br/>
-		 <table border="1">
+		 
+		 <table border="1" style="position: relative; top: -350px; left: 150px;">
 			 <tr>
 				 <td class="time">\</td>
 				 <td class="day">월</td>
@@ -198,6 +289,7 @@
 				 <td class="subject-sch">창</td>
 			 </tr>
 		 </table>
+		 
 		 <script src="index.js">
 		 </script>
 	</body>
