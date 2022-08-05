@@ -2662,7 +2662,7 @@ function draw(){
 								subH = list2[number][a].replace("&","").replace(health[list2[number][a][list2[number][a].length-1]+a],"");
 							}
 						const div = document.createElement("div")
-						td.innerHTML = subH+"<br/>"+"("+whoTeacher(subH,a)+"T)";
+						div.innerHTML = subH+"<br/>"+"("+whoTeacher(subH,a)+"T)";
 						div.title = "위치: "+where[whoTeacher(subH,a)];
 						td.innerText="";
 						td.append(div);
