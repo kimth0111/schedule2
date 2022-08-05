@@ -2647,6 +2647,7 @@ function draw(){
 						div.title = "위치: "+where[whoTeacher(list4[number][a],a)];
 						td.innerText="";
 						td.append(div);
+						td.classList.add(a);
 						if(day == j)
 							td.classList.add("today");
 					}
@@ -2675,6 +2676,7 @@ function draw(){
 							if(day == j)
 								td.classList.add("today");
 						}
+					td.classList.add(a+a);
 					}
 				}
 			})
