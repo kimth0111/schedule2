@@ -1,3 +1,38 @@
+const where = 
+{
+	"김근호": "D503",
+	"하미경": "D502",
+	"김용태": "D409",
+	"한진규": "D406",
+	"김용상": "D403",
+	"김형석": "D410(J405)",
+	"이정현": "J406",
+	"황석균": "세미나실",
+	"김도은": "J308(2-8)",
+	"노명지": "D301",
+	"김기모": "J307(2-7)",
+	"이영호": "J305(2-6)",
+	"김진아": "J304(2-5)",
+	"배오현": "J302",
+	"이윤숙": "J301",
+	"이상은": "D204(J201)",
+	"조양연": "D205",
+	"이우진": "J208(2-4)",
+	"한종오": "J207(2-3)",
+	"이종문": "J205(2-2)",
+	"한우진": "J204(2-1)",
+	"김규조": "J202(3-1)",
+	"유왕성": "J201(3-2)",
+	"김성규": "D106",
+	"이해창": "J108(3-8)",
+	"정기엽": "J104(3-5)",
+	"임지성": "J102(3-4)",
+	"김보련": "J405(1-4)",
+	"신현순": "D208",
+	"박병찬": "마리아홀",
+	"신현순/박병찬": "D208/마리아홀"
+}
+
 const teacher = 
 		{
     "독서1B": "이우진",
@@ -2581,7 +2616,7 @@ function draw(){
 	})
 	teacher4.forEach((tch, index)=>{
 		const a = whoTeacher(subject4[index].innerText ,set4[index].innerText)
-		tch.innerText = a;
+		tch.innerHTML = '<span>'+a+'</span>' + "<br/>" + where[a];
 	})
 	//2단위
 	subject2.forEach((sub, index)=>{
@@ -2591,7 +2626,7 @@ function draw(){
 	teacher2.forEach((tch, index)=>{
 		
 		if(list2[number][set2[index].innerText])
-		tch.innerText = whoTeacher(subject2[index].innerText ,set2[index].innerText);
+		tch.innerHTML = '<span>'+whoTeacher(subject2[index].innerText ,set2[index].innerText)+'</span>' + "<br/>" + where[whoTeacher(subject2[index].innerText ,set2[index].innerText)];
 	})
 	
 	
@@ -2607,7 +2642,11 @@ function draw(){
 					let a = schedule[i-1][j-1];
 				if(a.length == 1){
 					if(list4[number][a])	{
-						td.innerHTML = list4[number][a]+"<br/>"+"("+whoTeacher(list4[number][a],a)+"T)";
+						const div = document.createElement("div")
+						div.innerHTML = list4[number][a]+"<br/>"+"("+whoTeacher(list4[number][a],a)+"T)";
+						div.title = "위치: "+where[whoTeacher(list4[number][a],a)];
+						td.innerText="";
+						td.append(div);
 						if(day == j)
 							td.classList.add("today");
 					}
@@ -2622,12 +2661,17 @@ function draw(){
 							else{
 								subH = list2[number][a].replace("&","").replace(health[list2[number][a][list2[number][a].length-1]+a],"");
 							}
-							td.innerHTML = subH+"<br/>"+"("+whoTeacher(subH,a)+"T)";
+						const div = document.createElement("div")
+						td.innerHTML = subH+"<br/>"+"("+whoTeacher(subH,a)+"T)";
+						div.title = "위치: "+where[whoTeacher(subH,a)];
+						td.innerText="";
+						td.append(div);
 							if(day == j)
 								td.classList.add("today");
 						}
 						else if(list2[number][a])	{
 							td.innerHTML = list2[number][a]+"<br/>"+"("+whoTeacher(list2[number][a],a)+"T)";
+							td.title = "위치: "+where[whoTeacher(list2[number][a],a)];
 							if(day == j)
 								td.classList.add("today");
 						}
