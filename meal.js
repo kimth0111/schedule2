@@ -14,10 +14,13 @@ const today = {
   month: date.getMonth() + 1,
 };
 
+const mealCnt = {};
+
 mealList = JSON.parse(localStorage.getItem("meal-list"));
 if(!mealList){
 	getData();
 } else{
+	getCnt();
 	getList(today);
 }
 
@@ -32,6 +35,7 @@ function getData(re=false){
   .then((myJson) => {
 	localStorage.setItem("meal-list", JSON.stringify(myJson["mealServiceDietInfo"][1].row));
     mealList = myJson["mealServiceDietInfo"][1].row; // 받은 데이터에서 필요한 급식데이터만 추출
+	 getCnt();
     getList(today, re);
   });	
 }
@@ -95,7 +99,9 @@ function drawList({ dateJson, list }) {
       divList.appendChild(div);
     for (let j = 0; j < list[i].length; j++) {
       const div = document.createElement("div");
-      div.innerHTML = list[i][j].replace("(","").replace(")","").replace(/\./g,"").replace(/[0-9]/g,"");
+		 const a = list[i][j].replace("(","").replace(")","").replace(/\./g,"").replace(/[0-9]/g,"");
+      div.innerHTML = a;
+		 div.title = "올해의 " + mealCnt[a] + "번째 " + a;
 		 const br = document.createElement("br");
       divList.appendChild(div);
     }
@@ -103,3 +109,24 @@ function drawList({ dateJson, list }) {
     mealHtmlList[i].appendChild(divList);
   }
 }
+
+function getCnt(){
+  let { year, date, month } = today;
+
+  //자리수 맞춰주기 ex) 5월 --> 05월
+  date = date < 10 ? "0" + date : date;
+  month = month < 10 ? "0" + month : month;
+
+  let dateStr = "" + year + month + date; // 문자열로 변환 ex) 2022년05월22일 --> 20220522
+	mealList.forEach((meal)=>{
+		if(Number(meal.MLSV_YMD)>=20220301 && Number(meal.MLSV_YMD) <= Number(dateStr)){
+			meal.DDISH_NM.split("<br/>").forEach((el)=>{
+				const a = el.replace("(","").replace(")","").replace(/\./g,"").replace(/[0-9]/g,"");
+				if(mealCnt[a]) mealCnt[a] = mealCnt[a] +1;
+				else  mealCnt[a] = 1;
+			})
+		} 
+	})
+	console.log(mealCnt);
+}
+
