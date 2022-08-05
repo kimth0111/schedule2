@@ -2671,7 +2671,7 @@ function draw(){
 						}
 						else if(list2[number][a])	{
 							td.innerHTML = list2[number][a]+"<br/>"+"("+whoTeacher(list2[number][a],a)+"T)";
-							td.title = "위치: "+where[whoTeacher(list2[number][a],a)];
+							td.title = "위치!: "+where[whoTeacher(list2[number][a],a)];
 							if(day == j)
 								td.classList.add("today");
 						}
