@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-	    
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1MHPJFMP5M"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-1MHPJFMP5M');
-</script>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,6 +12,15 @@
 			 }
 			 td{
   				text-align: center;
+			 }
+			 td.teacher{
+			 	font-size: 9px;
+			 }
+			 td.teacher>span{
+			 	font-size: 16px;
+			 }
+			 td.subject{
+			 	font-size: 16px;
 			 }
 			 .set{
 			 	width: 100px;
@@ -363,7 +363,7 @@
 				 <td class="subject-sch">창</td>
 			 </tr>
 		 </table>
-		 <div class="container">
+		 <div class="container" style="width:300px">
 			 <button class="meal-button" onclick="document.querySelector('.meal-container').classList.toggle('hidden');" style="display:none">급식표</button>
 		 	<div class="meal-container" style="display: flex">
       		<div class="first"></div>
