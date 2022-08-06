@@ -1,132 +1,576 @@
-const sdCode = "N10"; //교육청 코드
-const scCode = "8140085"; //학교 코드
-const toFindYear = "2022"; //찾을 년도
-
-const url = `ATPT_OFCDC_SC_CODE=${sdCode}&SD_SCHUL_CODE=${scCode}&MLSV_YMD=${toFindYear}`; //요청할 url
-
-let mealList = []; //급식표를 담는 배열
-
-//Date객체로 오늘의 날짜 정보 저장
-const date = new Date();
-const today = {
-  year: date.getFullYear(),
-  date: parseInt(date.getDate()),
-  month: date.getMonth() + 1,
-};
-
-const mealCnt = {};
-
-mealList = JSON.parse(localStorage.getItem("meal-list"));
-if(!mealList){
-	getData();
-} else{
-	getCnt();
-	getList(today);
-}
-
-function getData(re=false){
-	
-	//fetch로 api에 요청하여 급식데이터 가져오기
-	fetch(
-	  "https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=981b2e196a364ee7b2223e11f375de26&Type=json&pSize=1000&" +
-		 url
-	)
-  .then((res) => res.json()) // 응답 데이터를 json화
-  .then((myJson) => {
-	localStorage.setItem("meal-list", JSON.stringify(myJson["mealServiceDietInfo"][1].row));
-    mealList = myJson["mealServiceDietInfo"][1].row; // 받은 데이터에서 필요한 급식데이터만 추출
-	 getCnt();
-    getList(today, re);
-  });	
-}
-
-function getList(dateJson, re=false) {
-  // 날짜를 받고 그 날짜의 급식 데이터를 반환
-  /* dateJson 형식
-	{
-		year:2022,
-		date:05,
-		month:11,
-	}
-	*/
-  let { year, date, month } = dateJson;
-
-  let list = [];
-
-  //자리수 맞춰주기 ex) 5월 --> 05월
-  date = date < 10 ? "0" + date : date;
-  month = month < 10 ? "0" + month : month;
-
-  let dateStr = "" + year + month + date; // 문자열로 변환 ex) 2022년05월22일 --> 20220522
-
-  list = mealList.filter((el) => {
-    return el.MLSV_YMD == dateStr;
-  }); //mealList의 객체들중 MLSV_YMD란 값이 dateStr과 같은 객체만 반환하여 배열 생성
-
-  for (let i = 0; i < 3; i++) {
-    //급식 정보가 없다면
-    if (!list[i]) {
-      list[i] = ["급식정보가 없습니다!"];
-		if(!re)
-		{
-			getData(true);
-			return;
-		}
-      continue;
-    }
-    list[i] = list[i].DDISH_NM.split("<br/>"); // ex) "백미밥<br/>김치" --> ["백미밥", "김치"]
-  }
-
-  //급식표 그리기
-  drawList({
-    dateJson,
-    list,
-  });
-}
-
-//html에 급식표 그리기 <-- 자유롭게 수정
-function drawList({ dateJson, list }) {
-  const mealHtmlList = document.querySelectorAll(
-    ".meal-container>div"
-  );
-  console.log(mealHtmlList);
-  for (let i = 0; i < 3; i++) {
-    const divList = document.createElement("div");
-	  
-      const div = document.createElement("div");
-	  div.classList = "meal-title";
-	  div.innerText = ["아침","점심", "저녁"][i]
-      divList.appendChild(div);
-    for (let j = 0; j < list[i].length; j++) {
-      const div = document.createElement("div");
-		 const a = list[i][j].replace("(","").replace(")","").replace(/\./g,"").replace(/[0-9]/g,"");
-      div.innerHTML = a;
-		 div.title = "올해의 " + mealCnt[a] + "번째 " + a;
-		 const br = document.createElement("br");
-      divList.appendChild(div);
-    }
-    mealHtmlList[i].innerHTML = "";
-    mealHtmlList[i].appendChild(divList);
-  }
-}
-
-function getCnt(){
-  let { year, date, month } = today;
-
-  //자리수 맞춰주기 ex) 5월 --> 05월
-  date = date < 10 ? "0" + date : date;
-  month = month < 10 ? "0" + month : month;
-
-  let dateStr = "" + year + month + date; // 문자열로 변환 ex) 2022년05월22일 --> 20220522
-	mealList.forEach((meal)=>{
-		if(Number(meal.MLSV_YMD)>=20220301 && Number(meal.MLSV_YMD) <= Number(dateStr)){
-			meal.DDISH_NM.split("<br/>").forEach((el)=>{
-				const a = el.replace("(","").replace(")","").replace(/\./g,"").replace(/[0-9]/g,"");
-				if(mealCnt[a]) mealCnt[a] = mealCnt[a] +1;
-				else  mealCnt[a] = 1;
-			})
-		} 
-	})
-	console.log(mealCnt);
-}
-
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>시간표</title>
+		 <style>
+			 table{
+			 	border: 1px solid black;
+				border-collapse: collapse;
+			 }
+			 td{
+  				text-align: center;
+			 }
+			 td.teacher{
+			 	font-size: 9px;
+			 }
+			 td.teacher>span{
+			 	font-size: 16px;
+			 }
+			 td.subject{
+			 	font-size: 16px;
+			 }
+			 .set{
+			 	width: 100px;
+				height: 70px;
+			 }
+			 .title>td{
+			 	width: 100%;
+				size: 50px;
+			 }
+			 .day{
+			 	width: 40px;
+				 height: 30px;
+			 }
+			 #own-schedule .time{
+				 border: 2px solid black;
+			 	width: 60px;
+				 height: 70px;
+			 }
+			 #own-schedule .day{
+				 border: 2px solid black;
+			 	width: 100px;
+				 height: 70px;
+			 }
+			 .subject-sch{
+			 	width: 80px;
+				 height: 30px;
+				 size: 20px;
+				 border: 2px solid black;
+			 }
+			 .not-today{
+				 opacity: 0.7;
+			 }
+			 .hidden{
+			 	display: none;
+			 }
+			 .today{
+			 	background-color: #FFFFCC;
+				 opacity: 1;
+			 }
+			 .meal-container div{
+				 text-align: center;
+			 	width: 180px;
+			 }
+			 .meal-container > div{
+			 	height: 200px;
+			 }
+			 .second{
+				 border-left: 0.5px solid black;
+				 border-right: 0.5px solid black;
+			 }
+			 .meal-container {
+			 	border: 1px solid black;
+				 width: 540px;
+				 text-align: center;
+			 }
+			 .meal-title{
+			 	font-size: 20px;
+				 border-bottom: 1px solid black;
+			 }
+			 .container{
+				 position:relative;
+				 top: -310px;
+			 }
+			 button{
+				 position: relative;
+				 left: 5px;
+			 	background-color: white;
+				 border: 1px solid black;
+			 }
+			 input[value="yellow"]{
+				 background: red;
+				 color: red;
+			 }
+			 .date{
+				 width: 540px;
+				 text-align: center;
+			 	font-size: 22px;
+			 }
+		 </style>
+    </head>
+    <body>
+		 <form>
+		 	<input autocomplete="off" type="text" name="number" placeholder="학번을 입력하세요...."/>
+		 </form>
+		 
+		 <div>학번: <span class="name"></span></div>
+		 
+		 <div style="display: flex">
+			 <div>
+		 <table border="1" id="set-tb">
+			 <tr class="title">
+				 <td colspan="6">4단위</td>
+			 </tr>
+			 <tr class="set4-tr">
+				 <td class="set">
+					 A
+				 </td>
+				 <td class="set">
+					 B
+				 </td>
+				 <td class="set">
+					 C
+				 </td>
+				 <td class="set">
+					 D
+				 </td>
+				 <td class="set">
+					 E
+				 </td>
+				 <td class="set">
+					 F
+				 </td>
+			 </tr>
+			 <tr class = "subject4-tr">
+				 <td class="subject">
+					 ?
+				 </td>
+				 <td class="subject">
+					 ?
+				 </td>
+				 <td class="subject">
+					 ?
+				 </td>
+				 <td class="subject">
+					 ?
+				 </td>
+				 <td class="subject">
+					 ?
+				 </td>
+				 <td class="subject">
+					 ?
+				 </td>
+			 </tr>
+			 <tr class = "teacher4-tr">
+				 <td class="teacher">
+					 ?
+				 </td>
+				 <td class="teacher">
+					 ?
+				 </td>
+				 <td class="teacher">
+					 ?
+				 </td>
+				 <td class="teacher">
+					 ?
+				 </td>
+				 <td class="teacher">
+					 ?
+				 </td>
+				 <td class="teacher">
+					 ?
+				 </td>
+			 </tr>
+			 <tr class="title">
+				 <td colspan="6">2단위</td>
+			 </tr>
+			 <tr class="set2-tr">
+				 <td class="set">
+					 A
+				 </td>
+				 <td class="set">
+					 B
+				 </td>
+				 <td class="set">
+					 C
+				 </td>
+				 <td class="set">
+					 D
+				 </td>
+				 <td class="set">
+					 
+				 </td>
+				 <td class="set">
+					 
+				 </td>
+			 </tr>
+			 <tr class = "subject2-tr">
+				 <td class="subject">
+					 ?
+				 </td>
+				 <td class="subject">
+					 ?
+				 </td>
+				 <td class="subject">
+					 ?
+				 </td>
+				 <td class="subject">
+					 ?
+				 </td>
+				 <td class="subject">
+					 
+				 </td>
+				 <td class="subject">
+					 
+				 </td>
+			 </tr>
+			 <tr class = "teacher2-tr">
+				 <td class="teacher">
+					 ?
+				 </td>
+				 <td class="teacher">
+					 ?
+				 </td>
+				 <td class="teacher">
+					 ?
+				 </td>
+				 <td class="teacher">
+					 ?
+				 </td>
+				 <td class="teacher">
+					 
+				 </td>
+				 <td class="teacher">
+					 
+				 </td>
+			 </tr>
+		 </table>
+			 </div>
+		 <table border="1" id="own-schedule" style="position: relative; left:50px; top: -30px">
+			 <tr>
+				 <td class="time">\</td>
+				 <td class="day">월</td>
+				 <td class="day">화</td>
+				 <td class="day">수</td>
+				 <td class="day">목</td>
+				 <td class="day">금</td>
+			 </tr>
+			 
+			 <tr>
+				 <td class="time">1교시</td>
+				 <td class="subject-sch">E</td>
+				 <td class="subject-sch">E</td>
+				 <td class="subject-sch">C</td>
+				 <td class="subject-sch">B</td>
+				 <td class="subject-sch">A</td>
+			 </tr>
+			 <tr>
+				 <td class="time">2교시</td>
+				 <td class="subject-sch">C</td>
+				 <td class="subject-sch">A*</td>
+				 <td class="subject-sch">A</td>
+				 <td class="subject-sch">B*</td>
+				 <td class="subject-sch">D*</td>
+			 </tr>
+			 <tr>
+				 <td class="time">3교시</td>
+				 <td class="subject-sch">B</td>
+				 <td class="subject-sch">C</td>
+				 <td class="subject-sch">C*</td>
+				 <td class="subject-sch">C</td>
+				 <td class="subject-sch">D</td>
+			 </tr>
+			 <tr>
+				 <td class="time">4교시</td>
+				 <td class="subject-sch">A</td>
+				 <td class="subject-sch">A</td>
+				 <td class="subject-sch">B*</td>
+				 <td class="subject-sch">E</td>
+				 <td class="subject-sch">F</td>
+			 </tr>
+			 <tr>
+				 <td class="time">5교시</td>
+				 <td class="subject-sch">D*</td>
+				 <td class="subject-sch">F</td>
+				 <td class="subject-sch">E</td>
+				 <td class="subject-sch">F</td>
+				 <td class="subject-sch">창</td>
+			 </tr>
+			 <tr>
+				 <td class="time">6교시</td>
+				 <td class="subject-sch">D</td>
+				 <td class="subject-sch">B</td>
+				 <td class="subject-sch">F</td>
+				 <td class="subject-sch">C*</td>
+				 <td class="subject-sch">창</td>
+			 </tr>
+			 <tr>
+				 <td class="time">7교시</td>
+				 <td class="subject-sch">A*</td>
+				 <td class="subject-sch">D</td>
+				 <td class="subject-sch">B</td>
+				 <td class="subject-sch">D</td>
+				 <td class="subject-sch">창</td>
+			 </tr>
+		 </table>
+		 </div>
+		 
+		 <br/>
+		 <br/>
+		 
+		 <table border="1" style="position: relative; top: -350px; left: 150px; display:none">
+			 <tr>
+				 <td class="time">\</td>
+				 <td class="day">월</td>
+				 <td class="day">화</td>
+				 <td class="day">수</td>
+				 <td class="day">목</td>
+				 <td class="day">금</td>
+			 </tr>
+			 
+			 <tr>
+				 <td class="time">1교시</td>
+				 <td class="subject-sch">E</td>
+				 <td class="subject-sch">E</td>
+				 <td class="subject-sch">C</td>
+				 <td class="subject-sch">B</td>
+				 <td class="subject-sch">A</td>
+			 </tr>
+			 <tr>
+				 <td class="time">2교시</td>
+				 <td class="subject-sch">C</td>
+				 <td class="subject-sch">A*</td>
+				 <td class="subject-sch">A</td>
+				 <td class="subject-sch">B*</td>
+				 <td class="subject-sch">D*</td>
+			 </tr>
+			 <tr>
+				 <td class="time">3교시</td>
+				 <td class="subject-sch">B</td>
+				 <td class="subject-sch">C</td>
+				 <td class="subject-sch">C*</td>
+				 <td class="subject-sch">C</td>
+				 <td class="subject-sch">D</td>
+			 </tr>
+			 <tr>
+				 <td class="time">4교시</td>
+				 <td class="subject-sch">A</td>
+				 <td class="subject-sch">A</td>
+				 <td class="subject-sch">B*</td>
+				 <td class="subject-sch">E</td>
+				 <td class="subject-sch">F</td>
+			 </tr>
+			 <tr>
+				 <td class="time">점심</td>
+				 <td class="subject-sch">-</td>
+				 <td class="subject-sch">-</td>
+				 <td class="subject-sch">-</td>
+				 <td class="subject-sch">-</td>
+				 <td class="subject-sch">-</td>
+			 </tr>
+			 <tr>
+				 <td class="time">5교시</td>
+				 <td class="subject-sch">D*</td>
+				 <td class="subject-sch">F</td>
+				 <td class="subject-sch">E</td>
+				 <td class="subject-sch">F</td>
+				 <td class="subject-sch">창</td>
+			 </tr>
+			 <tr>
+				 <td class="time">6교시</td>
+				 <td class="subject-sch">D</td>
+				 <td class="subject-sch">B</td>
+				 <td class="subject-sch">F</td>
+				 <td class="subject-sch">C*</td>
+				 <td class="subject-sch">창</td>
+			 </tr>
+			 <tr>
+				 <td class="time">7교시</td>
+				 <td class="subject-sch">A*</td>
+				 <td class="subject-sch">D</td>
+				 <td class="subject-sch">B</td>
+				 <td class="subject-sch">D</td>
+				 <td class="subject-sch">창</td>
+			 </tr>
+		 </table>
+		 <div class="container">
+			 <div class="date">오늘의 급식</div>
+		 	<div class="meal-container" style="display: flex">
+      		<div class="first"></div>
+      		<div class="second"></div>
+      		<div class="third"></div>
+				<div>
+					<button class="tomorrow">▶</button>
+					<button class="yesterday">◀</button>
+				</div>
+    		</div>
+			 <div><span> 밑에서 색상 바꾸기 가능</span></div>
+		 </div>
+		 <div class="option-container">
+			 <form class="option-form">
+				 <div style="display: flex">
+				 	<ul class="set4-ul">
+						<li class="setA-li">
+							<div style="display: flex">
+								<div>
+									A세트
+								</div>
+								<div class="set4-checkbox-list">
+									<label style="color:white;"><input type="radio" name="colorA" value="white">■</label>
+									<label style="color:red;"><input type="radio" name="colorA" value="red">■</label>
+									<label style="color:orange;"><input type="radio" name="colorA" value="orange">■</label>
+									<label style="color:green;"><input type="radio" name="colorA" value="green">■</label>
+									<label style="color:blue;"><input type="radio" name="colorA" value="blue">■</label>
+									<label style="color:purple;"><input type="radio" name="colorA" value="purple">■</label>
+									<label style="color:yellow;"><input type="radio" name="colorA" value="yellow">■</label>
+									<input type="text" name="colorTextA" style="width: 60px"/>
+								</div>
+							</div>
+						</li>
+						<li class="setB-li">
+							<div style="display: flex">
+								<div>
+									B세트
+								</div>
+								<div class="set4-checkbox-list">
+									<label style="color:white;"><input type="radio" name="colorB" value="white">■</label>
+									<label style="color:red;"><input type="radio" name="colorB" value="red">■</label>
+									<label style="color:orange;"><input type="radio" name="colorB" value="orange">■</label>
+									<label style="color:green;"><input type="radio" name="colorB" value="green">■</label>
+									<label style="color:blue;"><input type="radio" name="colorB" value="blue">■</label>
+									<label style="color:purple;"><input type="radio" name="colorB" value="purple">■</label>
+									<label style="color:yellow;"><input type="radio" name="colorB" value="yellow">■</label>
+									<input type="text" name="colorTextB" style="width: 60px"/>
+								</div>
+							</div>
+						</li>
+						<li class="setC-li">
+						<div style="display: flex">
+								<div>
+									C세트
+								</div>
+								<div class="set4-checkbox-list">
+									<label style="color:white;"><input type="radio" name="colorC" value="white">■</label>
+									<label style="color:red;"><input type="radio" name="colorC" value="red">■</label>
+									<label style="color:orange;"><input type="radio" name="colorC" value="orange">■</label>
+									<label style="color:green;"><input type="radio" name="colorC" value="green">■</label>
+									<label style="color:blue;"><input type="radio" name="colorC" value="blue">■</label>
+									<label style="color:purple;"><input type="radio" name="colorC" value="purple">■</label>
+									<label style="color:yellow;"><input type="radio" name="colorC" value="yellow">■</label>
+									<input type="text" name="colorTextC" style="width: 60px"/>
+								</div>
+							</div>
+						</li>
+						<li class="setD-li"><div style="display: flex">
+								<div>
+									D세트
+								</div>
+								<div class="set4-checkbox-list">
+									<label style="color:white;"><input type="radio" name="colorD" value="white">■</label>
+									<label style="color:red;"><input type="radio" name="colorD" value="red">■</label>
+									<label style="color:orange;"><input type="radio" name="colorD" value="orange">■</label>
+									<label style="color:green;"><input type="radio" name="colorD" value="green">■</label>
+									<label style="color:blue;"><input type="radio" name="colorD" value="blue">■</label>
+									<label style="color:purple;"><input type="radio" name="colorD" value="purple">■</label>
+									<label style="color:yellow;"><input type="radio" name="colorD" value="yellow">■</label>
+									<input type="text" name="colorTextD" style="width: 60px"/>
+								</div>
+							</div>
+						</li>
+						<li class="setE-li"><div style="display: flex">
+								<div>
+									E세트
+								</div>
+								<div class="set4-checkbox-list">
+									<label style="color:white;"><input type="radio" name="colorE" value="white">■</label>
+									<label style="color:red;"><input type="radio" name="colorE" value="red">■</label>
+									<label style="color:orange;"><input type="radio" name="colorE" value="orange">■</label>
+									<label style="color:green;"><input type="radio" name="colorE" value="green">■</label>
+									<label style="color:blue;"><input type="radio" name="colorE" value="blue">■</label>
+									<label style="color:purple;"><input type="radio" name="colorE" value="purple">■</label>
+									<label style="color:yellow;"><input type="radio" name="colorE" value="yellow">■</label>
+									<input type="text" name="colorTextE" style="width: 60px"/>
+								</div>
+							</div>
+						</li>
+						<li class="setF-li"><div style="display: flex">
+								<div>
+									F세트
+								</div>
+								<div class="set4-checkbox-list">
+									<label style="color:white;"><input type="radio" name="colorF" value="white">■</label>
+									<label style="color:red;"><input type="radio" name="colorF" value="red">■</label>
+									<label style="color:orange;"><input type="radio" name="colorF" value="orange">■</label>
+									<label style="color:green;"><input type="radio" name="colorF" value="green">■</label>
+									<label style="color:blue;"><input type="radio" name="colorF" value="blue">■</label>
+									<label style="color:purple;"><input type="radio" name="colorF" value="purple">■</label>
+									<label style="color:yellow;"><input type="radio" name="colorF" value="yellow">■</label>
+									<input type="text" name="colorTextF" style="width: 60px"/>
+								</div>
+							</div>
+						</li>
+					</ul>
+					 <ul class="set2-ul">
+						<li class="setA-li">
+							<div style="display: flex">
+								<div>
+									A세트
+								</div>
+								<div class="set2-checkbox-list">
+									<label style="color:#FF99FF;"><input type="radio" name="colora" value="pink">■</label>
+									<label style="color:skyblue;"><input type="radio" name="colora" value="skyblue">■</label>
+									<label style="color:lavender;"><input type="radio" name="colora" value="lavender">■</label>
+									<label style="color:lightgreen;"><input type="radio" name="colora" value="lightgreen">■</label>
+									<input type="text" name="colorTexta" style="width: 60px"/>
+								</div>
+							</div>
+						</li>
+						<li class="setB-li">
+							<div style="display: flex">
+								<div>
+									B세트
+								</div>
+								<div class="set2-checkbox-list">
+									<label style="color:#FF99FF;"><input type="radio" name="colorb" value="pink">■</label>
+									<label style="color:skyblue;"><input type="radio" name="colorb" value="skyblue">■</label>
+									<label style="color:lavender;"><input type="radio" name="colorb" value="lavender">■</label>
+									<label style="color:lightgreen;"><input type="radio" name="colorb" value="lightgreen">■</label>
+									<input type="text" name="colorTextb" style="width: 60px"/>
+								</div>
+							</div>
+						</li>
+						<li class="setC-li">
+						<div style="display: flex">
+								<div>
+									C세트
+								</div>
+								<div class="set2-checkbox-list">
+									<label style="color:#FF99FF;"><input type="radio" name="colorc" value="pink">■</label>
+									<label style="color:skyblue;"><input type="radio" name="colorc" value="skyblue">■</label>
+									<label style="color:lavender;"><input type="radio" name="colorc" value="lavender">■</label>
+									<label style="color:lightgreen;"><input type="radio" name="colorc" value="lightgreen">■</label>
+									<input type="text" name="colorTextc" style="width: 60px"/>
+								</div>
+							</div>
+						</li>
+						<li class="setD-li"><div style="display: flex">
+								<div>
+									D세트
+								</div>
+								<div class="set2-checkbox-list">
+									<label style="color:#FF99FF;"><input type="radio" name="colord" value="pink">■</label>
+									<label style="color:skyblue;"><input type="radio" name="colord" value="skyblue">■</label>
+									<label style="color:lavender;"><input type="radio" name="colord" value="lavender">■</label>
+									<label style="color:lightgreen;"><input type="radio" name="colord" value="lightgreen">■</label>
+									<input type="text" name="colorTextd" style="width: 60px"/>
+								</div>
+							</div>
+						</li>
+					</ul>
+					<ul class="set2-ul">
+						<li></li>
+					</ul>
+				 </div>
+				 오늘 이외에는 투명화:<label>on:<input type="radio" value="on" name="on"/></label><label>off:<input type="radio" value="off" name="on"/></label>
+				 <input type="submit" value="확인"/>
+			 </form>
+		 </div>
+    <script src="meal.js"></script>
+		 <script src="index.js">
+		 </script>
+		 <script src="color.js"></script>
+	</body>
+</html>
