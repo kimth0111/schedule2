@@ -62,15 +62,19 @@
 			 }
 			 .meal-container div{
 				 text-align: center;
-			 	width: 200px;
+			 	width: 180px;
 			 }
-			 .second div{
+			 .meal-container > div{
+			 	height: 200px;
+			 }
+			 .second{
 				 border-left: 0.5px solid black;
 				 border-right: 0.5px solid black;
 			 }
 			 .meal-container {
 			 	border: 1px solid black;
-				 width: 600px;
+				 width: 540px;
+				 text-align: center;
 			 }
 			 .meal-title{
 			 	font-size: 20px;
@@ -78,11 +82,22 @@
 			 }
 			 .container{
 				 position:relative;
-				 top: -280px;
+				 top: -310px;
+			 }
+			 button{
+				 position: relative;
+				 left: 5px;
+			 	background-color: white;
+				 border: 1px solid black;
 			 }
 			 input[value="yellow"]{
 				 background: red;
 				 color: red;
+			 }
+			 .date{
+				 width: 540px;
+				 text-align: center;
+			 	font-size: 22px;
 			 }
 		 </style>
     </head>
@@ -371,13 +386,16 @@
 				 <td class="subject-sch">창</td>
 			 </tr>
 		 </table>
-		 <div class="container" style="width:300px">
-			 <button class="meal-button" onclick="document.querySelector('.meal-container').classList.toggle('hidden');" style="display:none">급식표</button>
+		 <div class="container">
+			 <div class="date">오늘의 급식</div>
 		 	<div class="meal-container" style="display: flex">
       		<div class="first"></div>
       		<div class="second"></div>
       		<div class="third"></div>
-				
+				<div>
+					<button class="tomorrow">▶</button>
+					<button class="yesterday">◀</button>
+				</div>
     		</div>
 			 <div><span> 밑에서 색상 바꾸기 가능</span></div>
 		 </div>
