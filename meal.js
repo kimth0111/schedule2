@@ -151,6 +151,7 @@ document.querySelector("button.tomorrow").addEventListener("click",()=>{
 			currentDate.month=1;
 	}
 	getList(currentDate);
+	getCnt(currentDate);
 })
 
 document.querySelector("button.yesterday").addEventListener("click",()=>{
@@ -165,5 +166,6 @@ document.querySelector("button.yesterday").addEventListener("click",()=>{
 			currentDate.month=1;
 	}
 	getList(currentDate);
+	getCnt(currentDate);
 })
 
