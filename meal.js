@@ -17,7 +17,7 @@ const today = {
 let currentDate = {...today};
 let plusDate=0;
 
-const mealCnt = {};
+let mealCnt = {};
 
 mealList = JSON.parse(localStorage.getItem("meal-list"));
 if(!mealList){
@@ -127,6 +127,7 @@ function getCnt(dateJson){
   month = month < 10 ? "0" + month : month;
 
   let dateStr = "" + year + month + date; // 문자열로 변환 ex) 2022년05월22일 --> 20220522
+	mealCnt = {};
 	mealList.forEach((meal)=>{
 		if(Number(meal.MLSV_YMD)>=20220301 && Number(meal.MLSV_YMD) <= Number(dateStr)){
 			meal.DDISH_NM.split("<br/>").forEach((el)=>{
