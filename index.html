@@ -82,7 +82,7 @@
 			 }
 			 .container{
 				 position:relative;
-				 top: -310px;
+				 top: -300px;
 			 }
 			 button{
 				 position: relative;
@@ -401,7 +401,7 @@
 		 </div>
 		 <div class="option-container">
 			 <form class="option-form">
-				 <div style="display: flex">
+				 <div style="display: flex; background-color: white; border: 1px solid black;width: fit-content;">
 				 	<ul class="set4-ul">
 						<li class="setA-li">
 							<div style="display: flex">
@@ -409,7 +409,7 @@
 									A세트
 								</div>
 								<div class="set4-checkbox-list">
-									<label style="color:white;"><input type="radio" name="colorA" value="white">■</label>
+									<label style="color:white;"><input type="radio" name="colorA" class="current" value="white">■</label>
 									<label style="color:red;"><input type="radio" name="colorA" value="red">■</label>
 									<label style="color:orange;"><input type="radio" name="colorA" value="orange">■</label>
 									<label style="color:green;"><input type="radio" name="colorA" value="green">■</label>
@@ -417,6 +417,7 @@
 									<label style="color:purple;"><input type="radio" name="colorA" value="purple">■</label>
 									<label style="color:yellow;"><input type="radio" name="colorA" value="yellow">■</label>
 									<input type="text" name="colorTextA" style="width: 60px"/>
+									<label class="current-color" style="color:black;">■</label>
 								</div>
 							</div>
 						</li>
@@ -434,6 +435,7 @@
 									<label style="color:purple;"><input type="radio" name="colorB" value="purple">■</label>
 									<label style="color:yellow;"><input type="radio" name="colorB" value="yellow">■</label>
 									<input type="text" name="colorTextB" style="width: 60px"/>
+									<label class="current-color" style="color:black;">■</label>
 								</div>
 							</div>
 						</li>
@@ -451,6 +453,7 @@
 									<label style="color:purple;"><input type="radio" name="colorC" value="purple">■</label>
 									<label style="color:yellow;"><input type="radio" name="colorC" value="yellow">■</label>
 									<input type="text" name="colorTextC" style="width: 60px"/>
+									<label class="current-color" style="color:black;">■</label>
 								</div>
 							</div>
 						</li>
@@ -467,6 +470,7 @@
 									<label style="color:purple;"><input type="radio" name="colorD" value="purple">■</label>
 									<label style="color:yellow;"><input type="radio" name="colorD" value="yellow">■</label>
 									<input type="text" name="colorTextD" style="width: 60px"/>
+									<label class="current-color" style="color:black;">■</label>
 								</div>
 							</div>
 						</li>
@@ -483,6 +487,7 @@
 									<label style="color:purple;"><input type="radio" name="colorE" value="purple">■</label>
 									<label style="color:yellow;"><input type="radio" name="colorE" value="yellow">■</label>
 									<input type="text" name="colorTextE" style="width: 60px"/>
+									<label class="current-color" style="color:black;">■</label>
 								</div>
 							</div>
 						</li>
@@ -499,6 +504,7 @@
 									<label style="color:purple;"><input type="radio" name="colorF" value="purple">■</label>
 									<label style="color:yellow;"><input type="radio" name="colorF" value="yellow">■</label>
 									<input type="text" name="colorTextF" style="width: 60px"/>
+									<label class="current-color" style="color:black;">■</label>
 								</div>
 							</div>
 						</li>
@@ -510,11 +516,13 @@
 									A세트
 								</div>
 								<div class="set2-checkbox-list">
+									<label style="color:white;"><input type="radio" name="colora" value="white">■</label>
 									<label style="color:#FF99FF;"><input type="radio" name="colora" value="pink">■</label>
 									<label style="color:skyblue;"><input type="radio" name="colora" value="skyblue">■</label>
 									<label style="color:lavender;"><input type="radio" name="colora" value="lavender">■</label>
 									<label style="color:lightgreen;"><input type="radio" name="colora" value="lightgreen">■</label>
 									<input type="text" name="colorTexta" style="width: 60px"/>
+									<label class="current-color" style="color:black;">■</label>
 								</div>
 							</div>
 						</li>
@@ -524,11 +532,13 @@
 									B세트
 								</div>
 								<div class="set2-checkbox-list">
+									<label style="color:white;"><input type="radio" name="colorb" value="white">■</label>
 									<label style="color:#FF99FF;"><input type="radio" name="colorb" value="pink">■</label>
 									<label style="color:skyblue;"><input type="radio" name="colorb" value="skyblue">■</label>
 									<label style="color:lavender;"><input type="radio" name="colorb" value="lavender">■</label>
 									<label style="color:lightgreen;"><input type="radio" name="colorb" value="lightgreen">■</label>
 									<input type="text" name="colorTextb" style="width: 60px"/>
+									<label class="current-color" style="color:black;">■</label>
 								</div>
 							</div>
 						</li>
@@ -538,11 +548,13 @@
 									C세트
 								</div>
 								<div class="set2-checkbox-list">
+									<label style="color:white;"><input type="radio" name="colorc" value="white">■</label>
 									<label style="color:#FF99FF;"><input type="radio" name="colorc" value="pink">■</label>
 									<label style="color:skyblue;"><input type="radio" name="colorc" value="skyblue">■</label>
 									<label style="color:lavender;"><input type="radio" name="colorc" value="lavender">■</label>
 									<label style="color:lightgreen;"><input type="radio" name="colorc" value="lightgreen">■</label>
 									<input type="text" name="colorTextc" style="width: 60px"/>
+									<label class="current-color" style="color:black;">■</label>
 								</div>
 							</div>
 						</li>
@@ -551,18 +563,18 @@
 									D세트
 								</div>
 								<div class="set2-checkbox-list">
+									<label style="color:white;"><input type="radio" name="colord" value="white">■</label>
 									<label style="color:#FF99FF;"><input type="radio" name="colord" value="pink">■</label>
 									<label style="color:skyblue;"><input type="radio" name="colord" value="skyblue">■</label>
 									<label style="color:lavender;"><input type="radio" name="colord" value="lavender">■</label>
 									<label style="color:lightgreen;"><input type="radio" name="colord" value="lightgreen">■</label>
 									<input type="text" name="colorTextd" style="width: 60px"/>
+									<label class="current-color" style="color:black;">■</label>
 								</div>
 							</div>
 						</li>
 					</ul>
-					<ul class="set2-ul">
-						<li></li>
-					</ul>
+					 <div style="width:50px"></div>
 				 </div>
 				 오늘 이외에는 투명화:<label>on:<input type="radio" value="on" name="on"/></label><label>off:<input type="radio" value="off" name="on"/></label>
 				 <input type="submit" value="확인"/>
