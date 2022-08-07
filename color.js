@@ -98,10 +98,12 @@ function coloring(color4List, color2List){
 		document.querySelectorAll("."+"ABCDEF"[i]).forEach((el)=>{
 		el.style.backgroundColor = color4List[i]+"33";
 		})
+		document.querySelectorAll(".set4-ul .current-color")[i].style.color = color4List[i]
 	}
 	for(let i=0; i< 4; i++){
 		document.querySelectorAll("."+["AA","BB","CC","DD"][i]).forEach((el)=>{
 		el.style.backgroundColor = color2List[i]+"80";
+			document.querySelectorAll(".set2-ul .current-color")[i].style.color = color2List[i]
 		})
 	}
 }
