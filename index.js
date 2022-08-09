@@ -2750,17 +2750,11 @@ const health = {
 let number = localStorage.getItem("number") | "";
 if(list4[number]){
 	draw();
-}else{
-	const a = (Object.keys(student).filter((el) => {
-    return student[el] == number;
-  }))
-		 if(a[0]) {number = a[0]; draw()}
 }
 document.querySelector("form").addEventListener("submit",(el)=>{
 	el.preventDefault();
 	number = el.target.number.value;
 	if(number.length == 4) number = number[0] + "0" + number[1] + number[2] + number[3];
-	localStorage.setItem("number", number)
 	console.log()
 	if(!list2[number]) {
 		 const a = (Object.keys(student).filter((el) => {
@@ -2770,6 +2764,7 @@ document.querySelector("form").addEventListener("submit",(el)=>{
 		else return;
 		console.log(number);
 	}
+	localStorage.setItem("number", number)
 	draw();
 })
 
