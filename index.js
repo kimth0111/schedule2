@@ -2750,6 +2750,11 @@ const health = {
 let number = localStorage.getItem("number") | "";
 if(list4[number]){
 	draw();
+}else{
+	const a = (Object.keys(student).filter((el) => {
+    return student[el] == number;
+  }))
+		 if(a[0]) {number = a[0]; draw()}
 }
 document.querySelector("form").addEventListener("submit",(el)=>{
 	el.preventDefault();
