@@ -76,7 +76,7 @@ function getList(dateJson, re=false) {
       list[i] = ["급식정보가 없습니다!"];
 		if(!re)
 		{
-			getData(true);
+			getData(true, dateJson);
 			return;
 		}
       continue;
@@ -96,7 +96,6 @@ function drawList({ dateJson, list }) {
   const mealHtmlList = document.querySelectorAll(
     ".meal-container>div"
   );
-  console.log(mealHtmlList);
   for (let i = 0; i < 3; i++) {
     const divList = document.createElement("div");
 	  
@@ -111,12 +110,22 @@ function drawList({ dateJson, list }) {
 		 if(mealCnt[a])
 		 	div.title = "올해의 " + mealCnt[a] + "번째 " + a;
 		 const br = document.createElement("br");
+		 if(plusDate==44)
+			 div.style.color = "red";
       divList.appendChild(div);
     }
     mealHtmlList[i].innerHTML = "";
     mealHtmlList[i].appendChild(divList);
   }
-	document.querySelector(".date").innerHTML = ["오늘","내일","모레"][plusDate]+"의 급식"
+	if( plusDate <= 2)
+	document.querySelector(".date").innerHTML = ["오늘","내일","모레"][plusDate]+"의 급식"+"("+getDay(dateJson)+")"
+	else if (plusDate >=3 && plusDate <= 43)
+		document.querySelector(".date").innerHTML = plusDate+"일 후의 급식"+"("+getDay(dateJson)+")"
+	else if( plusDate == 44){
+		document.querySelector(".date").innerHTML = plusDate+"일 후의 급식"+"("+getDay(dateJson)+")"
+		document.querySelector(".date").style.color = "red";
+	}
+		
 }
 
 function getCnt(dateJson){
@@ -137,11 +146,10 @@ function getCnt(dateJson){
 			})
 		} 
 	})
-	console.log(mealCnt);
 }
 
 document.querySelector("button.tomorrow").addEventListener("click",()=>{
-	if(plusDate >=2) return;
+	if(plusDate >=44) return;
 	plusDate++;
 	currentDate.date = today.date + plusDate;
 	const lastDate = new Date(currentDate, currentDate.month-1, 0).getDate();
@@ -170,3 +178,11 @@ document.querySelector("button.yesterday").addEventListener("click",()=>{
 	getCnt(currentDate);
 })
 
+function getDay(dateJson){ //날짜문자열 형식은 자유로운 편
+	
+    var week = ['일', '월', '화', '수', '목', '금', '토'];
+
+    var dayOfWeek = week[new Date(dateJson.year, dateJson.month-1, dateJson.date).getDay()];
+
+    return dayOfWeek;
+}
