@@ -155,8 +155,8 @@ document.querySelector("button.tomorrow").addEventListener("click",()=>{
 	const lastDate =  (new Date(currentDate.year, currentDate.month, 0)).getDate()
 ;
 	if(currentDate.date > parseInt(lastDate)){
-		currentDate.date = 1;
-		currentDate.month = date.getMonth() + 1;
+		currentDate.date = currentDate.date-lastDate;
+		currentDate.month = date.getMonth() + 2;
 		if(currentDate.month>12)
 			currentDate.month=1;
 	}
@@ -170,7 +170,7 @@ document.querySelector("button.yesterday").addEventListener("click",()=>{
 	currentDate.date = today.date + plusDate;
 	const lastDate = (new Date(currentDate.year, currentDate.month, 0)).getDate();
 	if(currentDate.date > parseInt(lastDate)){
-		currentDate.date = 1;
+		currentDate.date = currentDate.date-lastDate;
 		currentDate.month = date.getMonth() + 2;
 		if(currentDate.month>12)
 			currentDate.month=1;
