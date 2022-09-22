@@ -6,6 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>시간표</title>
 		 <style>
+			 a{
+			   text-decoration: none;
+				 color: black;
+			 }
 			 table{
 			 	border: 1px solid black;
 				border-collapse: collapse;
@@ -98,7 +102,7 @@
 				 background: red;
 				 color: red;
 			 }
-			 .date{
+			 .date,.date2{
 				 width: 540px;
 				 text-align: center;
 			 	font-size: 22px;
@@ -396,6 +400,7 @@
 			 </tr>
 		 </table>
 		 <div class="container">
+			 <div class="date2"><a href="#snack"><div>간식리스트(클릭)</div></a></div>
 			 <div class="date">오늘의 급식</div>
 		 	<div class="meal-container" style="display: flex">
       		<div class="first"></div>
@@ -406,7 +411,7 @@
 					<button class="yesterday">◀</button>
 				</div>
     		</div>
-			 <div><span> 밑에서 색상 바꾸기 + 자감 확인 가능, 간식 리스트 있으면 메일</span><a href="https://popcat-dae.herokuapp.com/" style="color:black">
+			 <div><span> 밑에서 색상 바꾸기 + 자감 확인 가능</span><a href="https://popcat-dae.herokuapp.com/" style="color:black">
     <img src="popcat2.jpg" style="width:100px; height: 100px; border-radius: 20%">
     popcat 하러가기
 </a></div>
@@ -595,6 +600,9 @@
 			 </form>
 		 </div>
 								</div>
+		 <div id="snack">
+		 	<img src="snack9.png"/>
+		 </div>
     <script src="meal.js"></script>
 		 <script src="index.js">
 		 </script>
