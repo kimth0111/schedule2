@@ -2863,3 +2863,23 @@ function whoTeacher(sub, set){
 	//number = key;
 	//draw();
 //})
+
+const remainTime = document.querySelector("#hi");
+
+function diffDay() {
+    const masTime = new Date("2023-11-16");
+    const todayTime = new Date();
+    
+    const diff = masTime - todayTime;
+    
+    const diffDay = Math.floor(diff / (1000*60*60*24));
+    const diffHour = Math.floor((diff / (1000*60*60)) % 24);
+    const diffMin = Math.floor((diff / (1000*60)) % 60);
+    const diffSec = Math.floor(diff / 1000 % 60);
+    const diffMS = Math.floor(diff/ 100 % 60)
+    
+    remainTime.innerText = `수능까지 ${diffDay}일${diffHour}시간${diffMin}분${diffSec}초`;
+}
+
+diffDay();
+setInterval(diffDay, 1000);
