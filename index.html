@@ -26,6 +26,13 @@
 			 td.subject{
 			 	font-size: 16px;
 			 }
+			 
+			 .notion{
+			 	color:black;
+			 }
+			 .red{
+			 	color:red;
+			 }
 			 .set{
 			 	width: 100px;
 				height: 70px;
@@ -120,7 +127,7 @@
 		 	<input autocomplete="off" type="text" name="number" placeholder="(학번 또는 이름)을 입력하세요....">
 		 </form>
         <div id="hi" style="margin-left: 10px; color:red; "></div>
-			 <div style="margin-left: 10px;"><a href="https://drive.google.com/drive/folders/1t7rIXqgcANCbShvs9XIUWLr8PQBVzZ_C">클릭 >> 졸업사진 앨범 공유 << 클릭</a></div>
+			 <div style="margin-left: 10px;" class="notion"><a href="https://drive.google.com/drive/folders/1t7rIXqgcANCbShvs9XIUWLr8PQBVzZ_C">클릭 >> 졸업사진 앨범 공유 << 클릭</a></div>
 		 </div>
 		 
 		 <div>학번: <span class="name"></span></div>
@@ -610,6 +617,12 @@
     <script src="meal.js"></script>
 		 <script src="index.js">
 		 </script>
+	    <script>
+		setInterval(()=>{
+		
+	    	document.querySelector(".notion").classList.toggle("red")
+		},500)
+	    </script>
 		 <script src="color.js"></script>
 	</body>
 </html>
