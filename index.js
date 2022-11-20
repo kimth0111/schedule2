@@ -2867,7 +2867,10 @@ function whoTeacher(sub, set){
 const remainTime = document.querySelector("#hi");
 
 function diffDay() {
-    const masTime = new Date("2023-11-16");
+    let masTime = new Date("2023-11-16");
+	if(number == 20807){
+		masTime = new Date("2023-11-16")
+	}
     const todayTime = new Date();
     
     const diff = masTime - todayTime;
