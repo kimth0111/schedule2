@@ -2867,7 +2867,7 @@ function whoTeacher(sub, set){
 const remainTime = document.querySelector("#hi");
 
 function diffDay() {
-    let masTime = new Date("2023-11-16");
+    let masTime = new Date("2023-3-23");
 	if(number == 20807){
 		masTime = new Date("2023-7-31")
 	}
@@ -2885,7 +2885,7 @@ function diffDay() {
 		remainTime.innerText = `사관까지 ${diffDay}일${diffHour}시간${diffMin}분${diffSec}초`;
 	}else{
 		
-    remainTime.innerText = `수능까지 ${diffDay}일${diffHour}시간${diffMin}분${diffSec}초`;
+    remainTime.innerText = `3모까지 ${diffDay}일${diffHour}시간${diffMin}분${diffSec}초`;
 	}
 }
 
