@@ -20,9 +20,6 @@ const health = {
 
 let number = localStorage.getItem("number") | "";
 if (list4[number]) {
-  if (number == 20618) {
-    location.href = "https://xvideos.com/";
-  }
   draw();
   document.querySelector("#back").style.backgroundImage = "url(" + number + ".jpg" + ")";
 }
