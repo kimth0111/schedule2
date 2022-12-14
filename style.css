@@ -1,0 +1,117 @@
+* {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+table {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+td {
+  text-align: center;
+}
+td.teacher {
+  font-size: 9px;
+}
+td.teacher > span {
+  font-size: 16px;
+}
+td.subject {
+  font-size: 16px;
+}
+
+.notion {
+  color: black;
+}
+.red > a {
+  color: red;
+}
+.set {
+  width: 100px;
+  height: 70px;
+}
+.title > td {
+  width: 100%;
+  size: 50px;
+}
+.day {
+  width: 40px;
+  height: 30px;
+}
+#own-schedule .time {
+  border: 2px solid black;
+  width: 60px;
+  height: 70px;
+}
+#own-schedule .day {
+  border: 2px solid black;
+  width: 100px;
+  height: 70px;
+}
+.subject-sch {
+  width: 80px;
+  height: 30px;
+  size: 20px;
+  border: 2px solid black;
+}
+.not-today {
+  opacity: 0.7;
+}
+.hidden {
+  display: none;
+}
+.today {
+  background-color: #ffffcc;
+  opacity: 1;
+}
+.meal-container div {
+  text-align: center;
+  width: 180px;
+}
+.meal-container > div {
+  height: 200px;
+}
+.second {
+  border-left: 0.5px solid black;
+  border-right: 0.5px solid black;
+}
+.meal-container {
+  border: 1px solid black;
+  width: 540px;
+  text-align: center;
+}
+.meal-title {
+  font-size: 20px;
+  border-bottom: 1px solid black;
+}
+.container {
+  position: relative;
+  top: -300px;
+}
+.container2 {
+  position: relative;
+  top: -250px;
+}
+button {
+  position: relative;
+  left: 5px;
+  background-color: white;
+  border: 1px solid black;
+}
+input[value="yellow"] {
+  background: red;
+  color: red;
+}
+.date,
+.date2 {
+  width: 540px;
+  text-align: center;
+  font-size: 22px;
+}
+.option-container {
+  position: relative;
+  top: 50px;
+}
