@@ -1,6 +1,6 @@
 const sdCode = "N10"; //교육청 코드
 const scCode = "8140085"; //학교 코드
-const toFindYear = "2022"; //찾을 년도
+const toFindYear = "2023"; //찾을 년도
 
 const url = `ATPT_OFCDC_SC_CODE=${sdCode}&SD_SCHUL_CODE=${scCode}&MLSV_YMD=${toFindYear}`; //요청할 url
 
