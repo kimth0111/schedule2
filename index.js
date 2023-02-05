@@ -1,4 +1,3 @@
-location.href = "https://kimth0111.github.io/schedule2.5/"
 
 
 const schedule = [
