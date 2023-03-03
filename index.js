@@ -1,4 +1,4 @@
-
+location.href = "https://kimth0111.github.io/schedule3/"
 
 const schedule = [
   ["E", "E", "C", "B", "A"],
