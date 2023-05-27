@@ -6,6 +6,9 @@ a {
   text-decoration: none;
   color: black;
 }
+.bch {
+  background-color: white;
+}
 table {
   border: 1px solid black;
   border-collapse: collapse;
@@ -87,14 +90,14 @@ td.subject {
   font-size: 20px;
   border-bottom: 1px solid black;
 }
-.container {
+/* .container {
   position: relative;
   top: -300px;
 }
 .container2 {
   position: relative;
   top: -250px;
-}
+} */
 button {
   position: relative;
   left: 5px;

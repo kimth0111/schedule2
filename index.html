@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="img/dghs.png" type="image/x-icon" sizes="16x16">
     <title>시간표</title>
   </head>
   <body>
@@ -16,134 +17,159 @@
       <div id="hi" style="margin-left: 10px; color: red"></div>
     </div>
 
-    <div>학번: <span class="name"></span></div>
+    <div class="bch" style="width:fit-content">학번: <span class="name"></span></div>
 
-    <div style="display: flex">
-      <div>
-        <table border="1" id="set-tb">
-          <tr class="title">
-            <td colspan="6">4단위</td>
+    <div>
+      <div style="display: flex">
+        <div class="bch">
+          <div>
+            <table border="1" id="set-tb">
+              <tr class="title">
+                <td colspan="6">4단위</td>
+              </tr>
+              <tr class="set4-tr">
+                <td class="set">A</td>
+                <td class="set">B</td>
+                <td class="set">C</td>
+                <td class="set">D</td>
+                <td class="set">E</td>
+                <td class="set">F</td>
+              </tr>
+              <tr class="subject4-tr">
+                <td class="subject">?</td>
+                <td class="subject">?</td>
+                <td class="subject">?</td>
+                <td class="subject">?</td>
+                <td class="subject">?</td>
+                <td class="subject">?</td>
+              </tr>
+              <tr class="teacher4-tr">
+                <td class="teacher">?</td>
+                <td class="teacher">?</td>
+                <td class="teacher">?</td>
+                <td class="teacher">?</td>
+                <td class="teacher">?</td>
+                <td class="teacher">?</td>
+              </tr>
+              <tr class="title">
+                <td colspan="6">2단위</td>
+              </tr>
+              <tr class="set2-tr">
+                <td class="set">A</td>
+                <td class="set">B</td>
+                <td class="set">C</td>
+                <td class="set">D</td>
+                <td class="set"></td>
+                <td class="set"></td>
+              </tr>
+              <tr class="subject2-tr">
+                <td class="subject">?</td>
+                <td class="subject">?</td>
+                <td class="subject">?</td>
+                <td class="subject">?</td>
+                <td class="subject"></td>
+                <td class="subject"></td>
+              </tr>
+              <tr class="teacher2-tr">
+                <td class="teacher">?</td>
+                <td class="teacher">?</td>
+                <td class="teacher">?</td>
+                <td class="teacher">?</td>
+                <td class="teacher"></td>
+                <td class="teacher"></td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="container">
+            <div class="date2">
+              <a href="#snack" style="color:red"><div>영어시간표확인!!!!(클릭)</div></a>
+            </div>
+            <div class="date">오늘의 급식</div>
+            <div class="meal-container" style="display: flex">
+              <div class="first"></div>
+              <div class="second"></div>
+              <div class="third"></div>
+              <div>
+                <button class="tomorrow">▶</button>
+                <button class="yesterday">◀</button>
+					  <button class="reload">⊙</button>
+              </div>
+            </div>
+            <div>
+              <div style="width:500px;overflow:hidden; word-break:keep-all;">명언 준비중..</div>
+            </div>
+          </div>
+        </div>
+
+        <table border="1" class="bch" id="own-schedule" style="position: relative; left: 50px; top: -30px">
+          <tr>
+            <td class="time">\</td>
+            <td class="day">월</td>
+            <td class="day">화</td>
+            <td class="day">수</td>
+            <td class="day">목</td>
+            <td class="day">금</td>
           </tr>
-          <tr class="set4-tr">
-            <td class="set">A</td>
-            <td class="set">B</td>
-            <td class="set">C</td>
-            <td class="set">D</td>
-            <td class="set">E</td>
-            <td class="set">F</td>
+
+          <tr>
+            <td class="time">1교시</td>
+            <td class="subject-sch">E</td>
+            <td class="subject-sch">E</td>
+            <td class="subject-sch">C</td>
+            <td class="subject-sch">B</td>
+            <td class="subject-sch">A</td>
           </tr>
-          <tr class="subject4-tr">
-            <td class="subject">?</td>
-            <td class="subject">?</td>
-            <td class="subject">?</td>
-            <td class="subject">?</td>
-            <td class="subject">?</td>
-            <td class="subject">?</td>
+          <tr>
+            <td class="time">2교시</td>
+            <td class="subject-sch">C</td>
+            <td class="subject-sch">A*</td>
+            <td class="subject-sch">A</td>
+            <td class="subject-sch">B*</td>
+            <td class="subject-sch">D*</td>
           </tr>
-          <tr class="teacher4-tr">
-            <td class="teacher">?</td>
-            <td class="teacher">?</td>
-            <td class="teacher">?</td>
-            <td class="teacher">?</td>
-            <td class="teacher">?</td>
-            <td class="teacher">?</td>
+          <tr>
+            <td class="time">3교시</td>
+            <td class="subject-sch">B</td>
+            <td class="subject-sch">C</td>
+            <td class="subject-sch">C*</td>
+            <td class="subject-sch">C</td>
+            <td class="subject-sch">D</td>
           </tr>
-          <tr class="title">
-            <td colspan="6">2단위</td>
+          <tr>
+            <td class="time">4교시</td>
+            <td class="subject-sch">A</td>
+            <td class="subject-sch">A</td>
+            <td class="subject-sch">B*</td>
+            <td class="subject-sch">E</td>
+            <td class="subject-sch">F</td>
           </tr>
-          <tr class="set2-tr">
-            <td class="set">A</td>
-            <td class="set">B</td>
-            <td class="set">C</td>
-            <td class="set">D</td>
-            <td class="set"></td>
-            <td class="set"></td>
+          <tr>
+            <td class="time">5교시</td>
+            <td class="subject-sch">D*</td>
+            <td class="subject-sch">F</td>
+            <td class="subject-sch">E</td>
+            <td class="subject-sch">F</td>
+            <td class="subject-sch">창</td>
           </tr>
-          <tr class="subject2-tr">
-            <td class="subject">?</td>
-            <td class="subject">?</td>
-            <td class="subject">?</td>
-            <td class="subject">?</td>
-            <td class="subject"></td>
-            <td class="subject"></td>
+          <tr>
+            <td class="time">6교시</td>
+            <td class="subject-sch">D</td>
+            <td class="subject-sch">B</td>
+            <td class="subject-sch">F</td>
+            <td class="subject-sch">C*</td>
+            <td class="subject-sch">창</td>
           </tr>
-          <tr class="teacher2-tr">
-            <td class="teacher">?</td>
-            <td class="teacher">?</td>
-            <td class="teacher">?</td>
-            <td class="teacher">?</td>
-            <td class="teacher"></td>
-            <td class="teacher"></td>
+          <tr>
+            <td class="time">7교시</td>
+            <td class="subject-sch">A*</td>
+            <td class="subject-sch">D</td>
+            <td class="subject-sch">B</td>
+            <td class="subject-sch">D</td>
+            <td class="subject-sch">창</td>
           </tr>
         </table>
       </div>
-      <table border="1" id="own-schedule" style="position: relative; left: 50px; top: -30px">
-        <tr>
-          <td class="time">\</td>
-          <td class="day">월</td>
-          <td class="day">화</td>
-          <td class="day">수</td>
-          <td class="day">목</td>
-          <td class="day">금</td>
-        </tr>
-
-        <tr>
-          <td class="time">1교시</td>
-          <td class="subject-sch">E</td>
-          <td class="subject-sch">E</td>
-          <td class="subject-sch">C</td>
-          <td class="subject-sch">B</td>
-          <td class="subject-sch">A</td>
-        </tr>
-        <tr>
-          <td class="time">2교시</td>
-          <td class="subject-sch">C</td>
-          <td class="subject-sch">A*</td>
-          <td class="subject-sch">A</td>
-          <td class="subject-sch">B*</td>
-          <td class="subject-sch">D*</td>
-        </tr>
-        <tr>
-          <td class="time">3교시</td>
-          <td class="subject-sch">B</td>
-          <td class="subject-sch">C</td>
-          <td class="subject-sch">C*</td>
-          <td class="subject-sch">C</td>
-          <td class="subject-sch">D</td>
-        </tr>
-        <tr>
-          <td class="time">4교시</td>
-          <td class="subject-sch">A</td>
-          <td class="subject-sch">A</td>
-          <td class="subject-sch">B*</td>
-          <td class="subject-sch">E</td>
-          <td class="subject-sch">F</td>
-        </tr>
-        <tr>
-          <td class="time">5교시</td>
-          <td class="subject-sch">D*</td>
-          <td class="subject-sch">F</td>
-          <td class="subject-sch">E</td>
-          <td class="subject-sch">F</td>
-          <td class="subject-sch">창</td>
-        </tr>
-        <tr>
-          <td class="time">6교시</td>
-          <td class="subject-sch">D</td>
-          <td class="subject-sch">B</td>
-          <td class="subject-sch">F</td>
-          <td class="subject-sch">C*</td>
-          <td class="subject-sch">창</td>
-        </tr>
-        <tr>
-          <td class="time">7교시</td>
-          <td class="subject-sch">A*</td>
-          <td class="subject-sch">D</td>
-          <td class="subject-sch">B</td>
-          <td class="subject-sch">D</td>
-          <td class="subject-sch">창</td>
-        </tr>
-      </table>
     </div>
 
     <br />
@@ -224,24 +250,7 @@
         <td class="subject-sch">창</td>
       </tr>
     </table>
-    <div class="container">
-      <div class="date2">
-        <a href="#snack"><div>간식리스트(클릭)</div></a>
-      </div>
-      <div class="date">오늘의 급식</div>
-      <div class="meal-container" style="display: flex">
-        <div class="first"></div>
-        <div class="second"></div>
-        <div class="third"></div>
-        <div>
-          <button class="tomorrow">▶</button>
-          <button class="yesterday">◀</button>
-        </div>
-      </div>
-      <div>
-        <span> 밑에서 색상 바꾸기 + 자감 확인 가능 / 배경이미지는 메일로 연락</span>
-      </div>
-    </div>
+
     <div class="container2">
       <iframe
         src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Pacific%2FWake&showTitle=0&showNav=0&showDate=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0&mode=MONTH&src=bm9uc2FuZGFlZ2Vvbi5jbmVocy5rcl9jbGFzc3Jvb21hNGUyNDhlNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23AD1457"
@@ -253,7 +262,7 @@
       ></iframe>
       <div class="option-container">
         <form class="option-form">
-          <div style="display: flex; background-color: white; border: 1px solid black; width: fit-content">
+          <div class="bch" style="display: flex; background-color: white; border: 1px solid black; width: fit-content">
             <ul class="set4-ul">
               <li class="setA-li">
                 <div style="display: flex">
@@ -411,6 +420,7 @@
                   </div>
                 </div>
               </li>
+              <li>투명도(1~100): <input type="text" name="op" style="width: 60px" /></li>
             </ul>
             <div style="width: 50px"></div>
           </div>
@@ -420,8 +430,12 @@
         </form>
       </div>
     </div>
+    <br/>
+    <br/>
     <div id="snack">
-      <img src="snack12.jpg" />
+      <div>한: 한희정T; 오: 한종오T</div>
+      <img src="english.png" />
+      <img src="img/snack5.jpg" />
     </div>
 
     <script src="inform.js"></script>

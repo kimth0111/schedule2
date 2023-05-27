@@ -181,6 +181,11 @@ document.querySelector("button.yesterday").addEventListener("click",()=>{
 	getCnt(currentDate);
 })
 
+document.querySelector("button.reload").addEventListener("click",()=>{
+	getData();
+})
+
+
 function getDay(dateJson){ //날짜문자열 형식은 자유로운 편
 	
     var week = ['일', '월', '화', '수', '목', '금', '토'];
