@@ -222,7 +222,7 @@ function diffDay() {
   if (number == 30507) {
     remainTime.innerText = `사관까지 ${diffDay}일${diffHour}시간${diffMin}분${diffSec}초`;
   } else {
-    remainTime.innerText = `6모까지 ${diffDay}일${diffHour}시간${diffMin}분${diffSec}초 // 오늘의 온도는 ${temp}ºC.....`;
+    remainTime.innerText = `3학년은 주소창의 schedule2를 schedule3로 바꿔주세요`;
   }
 }
 
